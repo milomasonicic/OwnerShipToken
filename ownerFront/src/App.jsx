@@ -1,13 +1,17 @@
-import './App.css'
 import { ethers, formatUnits } from "ethers";
 import abi from "./contract/OwnershipToken.json"
 import { useState, useRef, useEffect } from "react";
 import Deposit from './Depostit';
+import Adress from "./WalletAdress";
+import Balance from "./Balance";
+
+import "./index.css"
 
 export default function App() {
-  const [connected, setConnected] = useState(false)
+
+    const [connected, setConnected] = useState(false)
     const [walletAddress, setWalletAdress] = useState("")
-    const [balance, setBalance] = useState(" ")
+    const [balance, setBalance] = useState("")
 
     const [state, setState] = useState({
         provider: null,
@@ -66,8 +70,6 @@ export default function App() {
     }
 
     //data
-
-   
     async function updateBalanceOwnership(){
         try {
 
@@ -127,26 +129,56 @@ export default function App() {
  
 
     return(
-        <div>
-            <button 
-            onClick={connectWallet}
+        <div className="bg-stone-50 h-[1400px]">
 
+          <div className=" max-w-[90%] mx-auto bg-neutral-50  ">
+            <button 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={connectWallet}
             >
 
              {connected ? "Disconnect MetaMask": "Connect with MetaMask"}   
             </button>
-
             <div>
-              {walletAddress}
+
+              
+              <Adress adrs={walletAddress}></Adress>
+            
             </div>
             <div>
               {connected ? 
-              
-                <div>
-                  Balance:{balance}
-                </div>
-                : " "
+              <div>
+                <Balance blnc={balance}></Balance>
+              </div>  
+              :
+              <Balance></Balance>
             }
+            
+            </div>
+         
+            <div
+            className="w-[90%] 
+            mx-auto 
+            bg-gradient-to-r from-indigo-50 via-stone-50 via-neutral-50 via-stone-50 to-indigo-50
+            h-[120px]
+            flex items-center 
+            justify-center
+            rounded-b-2xl
+            "
+            >
+              <input type="text"
+              placeholder="Enter amount"
+              value={deposit}
+              onChange = {(e) => setDeposite(e.target.value)}
+              
+              />
+              <button 
+              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              onClick={handleDeposit}> Deposit</button>
+
+            </div>
+
+            <p>kraj diva</p>
             </div>
 
             <h4>Info</h4>
@@ -155,14 +187,8 @@ export default function App() {
             <p>Your Deposit: {userDeposit} ETH</p>
             <p>Ownership: {ownership}%</p>
 
-          
-            <input type="text"
-            placeholder="Enter amount"
-            value={deposit}
-            onChange = {(e) => setDeposite(e.target.value)}
-            
-            />
-            <button onClick={handleDeposit}> Deposit</button>
+
+
         </div>
 
     )
