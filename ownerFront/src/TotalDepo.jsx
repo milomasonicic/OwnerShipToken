@@ -1,4 +1,4 @@
-export default function Adress({adrs}){
+export default function TotalDep({dep}){
 
     return(
         <div className="
@@ -6,8 +6,10 @@ export default function Adress({adrs}){
         mx-auto
         p-4
         rounded-md mt-2 h-[100px] bg-neutral-50 shadow-md ">
-            <h4>Wallet:</h4>
-            <p class="break-words ...">    {adrs}</p>
+            <h1>
+                totl
+            </h1>
+            {dep}
         </div>
     )
 }
