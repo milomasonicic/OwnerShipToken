@@ -16,6 +16,7 @@ import "./index.css"
 export default function App() {
 
     const [connected, setConnected] = useState(false)
+    const [toogle, setToogle] = useState(false)
     const [walletAddress, setWalletAdress] = useState("")
     const [balance, setBalance] = useState("")
     const balanceRef = useRef("")
@@ -144,7 +145,7 @@ export default function App() {
           //window.location.reload();
             const balanceCurent = balanceRef.current - deposit
             balanceRef.current = balanceCurent
-
+            setDeposite("")
             startTransition(async() => {
               updateContractData()
             })  
@@ -156,6 +157,11 @@ export default function App() {
             console.error("Error depositing:", error);
 
         }
+    }
+
+    async function toogleComponenet(){
+
+      setToogle(prevToggle => !prevToggle)
     }
 
  
@@ -180,10 +186,18 @@ export default function App() {
               </div>
               <div className="w-[50%]">
                 <div>
+                  {connected ? 
                   <TotalDep dep={totalDepositRef.current}></TotalDep>                
+                  :
+                  <TotalDep dep={0}></TotalDep>
+                }
                 </div>
                 <div>
-                  <UserDep dep={userDeposit}></UserDep>                
+                  {connected ?
+                    <UserDep dep={userDeposit}></UserDep>                
+                    :
+                    <UserDep dep={0}></UserDep>
+                  }
                 </div>
 
              
@@ -227,14 +241,20 @@ export default function App() {
               <button 
               class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               onClick={handleDeposit}> Deposit</button>
-              <button class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"> Burn</button>
 
             </div>
+   
+          </div>
 
-                
-
-           
-            </div>
+          <div className="mt-20">
+            <button onClick={toogleComponenet}> Toogle</button>
+            {
+              toogle ?
+              <div className="bg-zinc-600 h-[600px]"> yes </div>
+              :
+              <div> no </div>
+            }
+          </div>
 
         </div>
 
