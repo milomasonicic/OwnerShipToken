@@ -1,6 +1,6 @@
 import { ethers, formatUnits } from "ethers";
 import abi from "./contract/OwnershipToken.json"
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useTransition } from "react";
 import Deposit from './Depostit';
 import Adress from "./WalletAdress";
 import Balance from "./Balance";
@@ -10,11 +10,21 @@ import UserDep from "./UserDepo";
 
 import "./index.css"
 
+
+
+
 export default function App() {
 
     const [connected, setConnected] = useState(false)
     const [walletAddress, setWalletAdress] = useState("")
     const [balance, setBalance] = useState("")
+    const balanceRef = useRef("")
+
+  
+    const [key, setKey] = useState(0);
+
+    //transition
+    const [isPending, startTransition] = useTransition()
 
     const [state, setState] = useState({
         provider: null,
@@ -22,7 +32,8 @@ export default function App() {
         contract: null
     })
 
-    const [totalDeposit, setTotalDeposit] = useState("")
+    //const [totalDeposit, setTotalDeposit] = useState("")
+    const totalDepositRef = useRef("")
     const [userDeposit, setUserDeposit] = useState("")
     const [ownership, setOwnership] = useState("")
     const [deposit, setDeposite] = useState("")
@@ -52,6 +63,8 @@ export default function App() {
               const balance1 = await provider.getBalance(walletAddress)
               const showBalance = formatUnits(balance1,"ether")
               setBalance(showBalance)
+
+              balanceRef.current = showBalance
           }
       
           const contractAddres = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
@@ -64,11 +77,19 @@ export default function App() {
           )
 
           setState({provider,signer,contract});
-       
+          console.log(contract)
+         /* localStorage.setItem("connected", true);
+          localStorage.setItem("walletAddress", walletAddress);
+       */
 
         } else{
             setConnected(false)
             setWalletAdress(" ")
+
+               // Clear saved wallet data from local storage
+            /*localStorage.removeItem("connected");
+            localStorage.removeItem("walletAddress");
+            */
         }
     }
 
@@ -93,16 +114,15 @@ export default function App() {
       try{
 
         const {contract} = state
-        const totalDeposit = await contract.totalDeposit()
+        const totalDep = await contract.totalDeposit()
         const userDeposit = await contract.deposits(walletAddress)
         const ownership = await contract.owwnerShip(walletAddress)
-
-        console.log(totalDeposit)
-        console.log(ownership)
-        console.log(userDeposit)
-        setTotalDeposit(formatUnits(totalDeposit, "ether"))
+       
+        totalDepositRef.current = formatUnits(totalDep, "ether")
         setUserDeposit(formatUnits(userDeposit, "ether"))
         setOwnership(ownership.toString())
+
+        
 
       }catch(error){
         console.error(error)
@@ -119,9 +139,18 @@ export default function App() {
             })
 
             await tx.wait();
-            alert("good")
+            alert("Deposit successful")
 
-            await updateBalanceOwnership()
+          //window.location.reload();
+            const balanceCurent = balanceRef.current - deposit
+            balanceRef.current = balanceCurent
+
+            startTransition(async() => {
+              updateContractData()
+            })  
+
+           // After successful deposit, reconnect wallet to update state
+             //await connectWallet();
         }catch(error){
 
             console.error("Error depositing:", error);
@@ -132,7 +161,7 @@ export default function App() {
  
 
     return(
-        <div className="bg-stone-50">
+        <div className="bg-stone-50" key={key}>
 
           <div className=" max-w-[80%] mx-auto bg-neutral-50  ">
             <div className="w-[90%] mx-auto p-4 rounded-md mt-10 h-[100px]">
@@ -146,11 +175,12 @@ export default function App() {
 
             <div className="flex w-[90%] mx-auto">
               <div className="rounded-lg w-[50%] h-[320px] bg-gradient-to-r from-neutral-100 via-stone-50 via-neutral-50 via-stone-50 to-neutral-100">
-                <Ownership percentage={ownership}></Ownership>
+                <Ownership percentage={ownership} ></Ownership>
+               
               </div>
               <div className="w-[50%]">
                 <div>
-                  <TotalDep dep={totalDeposit}></TotalDep>                
+                  <TotalDep dep={totalDepositRef.current}></TotalDep>                
                 </div>
                 <div>
                   <UserDep dep={userDeposit}></UserDep>                
@@ -169,7 +199,7 @@ export default function App() {
             <div>
               {connected ? 
               <div>
-                <Balance blnc={balance}></Balance>
+                <Balance blnc={balanceRef.current}></Balance>
               </div>  
               :
               <Balance></Balance>
@@ -203,7 +233,7 @@ export default function App() {
 
                 
 
-            <p>kraj diva</p>
+           
             </div>
 
         </div>

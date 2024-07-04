@@ -5,7 +5,7 @@ export default function Ownership({percentage}){
     const data = [
         ["Task", "Hours per Day"],
         ["You", percentage],
-        ["Others", 100 - percentage],
+       
        
       ];
       
