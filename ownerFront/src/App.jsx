@@ -1,17 +1,14 @@
 import { ethers, formatUnits } from "ethers";
-import abi from "./contract/OwnershipToken.json"
+import abi from "./contract/Own.json"
 import { useState, useRef, useEffect, useTransition } from "react";
-import Deposit from './Depostit';
+import OwnershipToken from "./OwnershipToken";
 import Adress from "./WalletAdress";
 import Balance from "./Balance";
 import Ownership from "./Ownership";
 import TotalDep from "./TotalDepo";
 import UserDep from "./UserDepo";
-
 import "./index.css"
-
-
-
+import Burn from "./Burn";
 
 export default function App() {
 
@@ -20,6 +17,7 @@ export default function App() {
     const [walletAddress, setWalletAdress] = useState("")
     const [balance, setBalance] = useState("")
     const balanceRef = useRef("")
+    const [burnToogle, setburnToogle] = useState(false)
 
   
     const [key, setKey] = useState(0);
@@ -140,7 +138,7 @@ export default function App() {
             })
 
             await tx.wait();
-            alert("Deposit successful")
+            //alert("Deposit successful")
 
           //window.location.reload();
             const balanceCurent = balanceRef.current - deposit
@@ -160,10 +158,13 @@ export default function App() {
     }
 
     async function toogleComponenet(){
-
       setToogle(prevToggle => !prevToggle)
     }
 
+    //    <button onClick={toogleComponenet}> Toogle</button>
+    async function burnComponenet(){
+      setburnToogle(burnToogle => !burnToogle)
+    }
  
 
     return(
@@ -182,7 +183,7 @@ export default function App() {
             <div className="flex w-[90%] mx-auto">
               <div className="rounded-lg w-[50%] h-[320px] bg-gradient-to-r from-neutral-100 via-stone-50 via-neutral-50 via-stone-50 to-neutral-100">
                 <Ownership percentage={ownership} ></Ownership>
-               
+               {ownership}
               </div>
               <div className="w-[50%]">
                 <div>
@@ -250,9 +251,28 @@ export default function App() {
             <button onClick={toogleComponenet}> Toogle</button>
             {
               toogle ?
-              <div className="bg-zinc-600 h-[600px]"> yes </div>
+              <div className="bg-zinc-600 h-[600px]"> yes 
+                <OwnershipToken state={state}></OwnershipToken>
+              </div>
               :
-              <div> no </div>
+              <div> 
+                no
+                
+              </div>
+            }
+          </div>
+
+          <div>
+          <button onClick={burnComponenet}> Burn</button>
+            {burnToogle ? 
+            
+              <div>
+                <Burn></Burn>
+              </div>
+              :
+              <div>
+                
+              </div>
             }
           </div>
 

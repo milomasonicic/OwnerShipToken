@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState, useRef, Children} from "react";
+/*import React, {createContext, useContext, useEffect, useState, useRef, Children} from "react";
 import { ethers } from "ethers";
 import abi from "./contract/OwnershipToken.json"
 
@@ -127,4 +127,4 @@ export const WalletProvider = ({ children}) =>{
     )
 }
 
-export const useWallet = () => useContext(WalletContext)
+export const useWallet = () => useContext(WalletContext)*/
