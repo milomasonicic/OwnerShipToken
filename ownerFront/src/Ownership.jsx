@@ -2,14 +2,22 @@ import { Chart } from "react-google-charts";
 
 export default function Ownership({percentage}){
 
+    //const []
+    
+    const total = 100;
+    const you = Number(percentage);
+    const oth = total - you
+
     const data = [
+        ["Component", "Ownership"],
+        ["You", you],
+        ["Others", oth],
        
-        ["You", percentage],
-        ["Others", "55"],
       ];
       
     const options = {
         title: "Ownership percentage",
+        pieHole: 5,
         is3D: true,
       };
 
