@@ -2,7 +2,8 @@ export default function Balance({blnc}){
 
     return(
         <div className="
-        w-[90%]
+          md:w-[90%]
+        w-[100%]
         mx-auto
         p-4
      

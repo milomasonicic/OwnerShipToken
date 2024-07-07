@@ -60,6 +60,7 @@ export default function App() {
 
             if(walletAddress !== null){
               const balance1 = await provider.getBalance(walletAddress)
+              
               const showBalance = formatUnits(balance1,"ether")
               setBalance(showBalance)
 
@@ -167,12 +168,12 @@ export default function App() {
 
             </div>
 
-            <div className="flex w-[90%] mx-auto">
-              <div className="rounded-lg w-[50%] h-[320px] bg-gradient-to-r from-neutral-100 via-stone-50 via-neutral-50 via-stone-50 to-neutral-100">
+            <div className="flex flex-col md:flex-row w-[90%] mx-auto">
+              <div className="rounded-lg w-[100%] md:w-[50%] h-[320px] bg-gradient-to-r from-neutral-100 via-stone-50 via-neutral-50 via-stone-50 to-neutral-100">
                 <Ownership percentage={ownership} ></Ownership>
                {ownership}
               </div>
-              <div className="w-[50%]">
+              <div className="w-[100%] md:w-[50%]">
                 <div>
                   {connected ? 
                   <TotalDep dep={totalDepositRef.current}></TotalDep>                
@@ -190,9 +191,7 @@ export default function App() {
 
              
                 <div>
-                  <h4>POGLEDAJ OVO</h4>
-                {totalDepositRef.current}
-                {userDeposit}
+                ow
                 {ownership}
              
                 </div>
@@ -216,10 +215,11 @@ export default function App() {
             </div>
          
             <div
-            className="w-[90%] 
+            className="w-[100%] md:w-[90%] flex flex-col md:flex-row
             mx-auto 
             bg-gradient-to-r from-indigo-50 via-stone-50 via-neutral-50 via-stone-50 to-indigo-50
-            h-[120px]
+            h-[180px]
+            md:h-[120px]
             flex items-center 
             justify-center
             rounded-b-2xl
@@ -233,7 +233,7 @@ export default function App() {
               
               />
               <button 
-              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-[240px] md:w-[100px] mt-4 md:mt-0 "
               onClick={handleDeposit}> Deposit</button>
 
             </div>
