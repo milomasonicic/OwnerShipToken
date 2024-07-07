@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { ethers } from "ethers"
-import abi from "./contract/Own.json"
+
 import { Chart } from "react-google-charts";
 import {useSpring, animated} from "@react-spring/web"
 

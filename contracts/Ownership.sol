@@ -37,19 +37,12 @@ contract Own is ERC20 {
 
     function updateOwnership(address user) internal {
 
-        owwnerShip[user] = (deposits[user] * 100)/ totalDeposit;
+        owwnerSip[user] = (deposits[user] * 100)/ totalDeposit;
 
     }  
 
      function getParticipants() external view returns (address[] memory) {
         return participants;
     }
-
-  
-
-    function getOwnership(address user) external returns (uint256) {
-        return owwnerSip[user]
-    }
-
 
 }

@@ -1,5 +1,5 @@
 import { ethers, formatUnits } from "ethers";
-import abi from "./contract/Own.json"
+import abi from "./contract/OwnNew.json"
 import { useState, useRef, useEffect, useTransition } from "react";
 import OwnershipToken from "./OwnershipToken";
 import Adress from "./WalletAdress";
@@ -8,7 +8,7 @@ import Ownership from "./Ownership";
 import TotalDep from "./TotalDepo";
 import UserDep from "./UserDepo";
 import "./index.css"
-import Burn from "./Burn";
+
 
 export default function App() {
 
@@ -17,7 +17,10 @@ export default function App() {
     const [walletAddress, setWalletAdress] = useState("")
     const [balance, setBalance] = useState("")
     const balanceRef = useRef("")
+
+    //burn
     const [burnToogle, setburnToogle] = useState(false)
+    const [burnAmount, setBurnAmount] = useState()
 
   
     const [key, setKey] = useState(0);
@@ -92,6 +95,20 @@ export default function App() {
         }
     }
 
+    //data
+    async function updateBalanceOwnership(){
+        try {
+
+            const {contract} = state
+            const balance = await contract.balanceOf(walletAddress)
+
+            setOwnership(ownership.toString())
+
+        } catch(error){
+            console.error(error)
+        }
+    }
+
     //update Contract Data
 
     async function updateContractData() {
@@ -110,7 +127,7 @@ export default function App() {
         
 
       }catch(error){
-        console.error("upd data", error)
+        console.error(error)
       }
     }
 
@@ -124,17 +141,17 @@ export default function App() {
             })
 
             await tx.wait();
-            //alert("Deposit successful")
+            alert("Deposit successful")
 
           //window.location.reload();
+          /*
             const balanceCurent = balanceRef.current - deposit
             balanceRef.current = balanceCurent
             setDeposite("")
-
             startTransition(async() => {
               updateContractData()
             })  
-
+          */
            // After successful deposit, reconnect wallet to update state
              //await connectWallet();
         }catch(error){
@@ -142,6 +159,28 @@ export default function App() {
             console.error("Error depositing:", error);
 
         }
+    }
+
+    //burn
+    async function handleBurn() {
+
+      try{
+        const {contract} = state
+        const amount = ethers.utils.parseUnits(burnAmount, 18)
+
+        const tx = await contract.burn(amount)
+        await tx.wait()
+        setBurnAmount("")
+        /*
+        startTransition(async() => {
+          updateContractData()
+        }) 
+          */ 
+
+      } catch(error) {
+        console.error(error)
+      }
+
     }
 
     async function toogleComponenet(){
@@ -189,13 +228,7 @@ export default function App() {
                 </div>
 
              
-                <div>
-                  <h4>POGLEDAJ OVO</h4>
-                {totalDepositRef.current}
-                {userDeposit}
-                {ownership}
-             
-                </div>
+                
               </div>
             </div>
             <div>
@@ -239,6 +272,44 @@ export default function App() {
             </div>
    
           </div>
+          <div>
+          <button onClick={burnComponenet}> Burn</button>
+            {burnToogle ? 
+            
+              <div>
+                  <div className="w-[80%] mx-auto mb-10">
+                      <div
+                    className="w-[90%] 
+                    mx-auto 
+                    bg-gradient-to-r from-purple-300  via-indigo-100 to-purple-300
+                    h-[320px]
+                    flex items-center 
+                    justify-center
+                    rounded-2xl
+                    "
+                    >
+                      <input type="text"
+                      placeholder="Enter amount"
+                      className="p-4 mr-2 ml-2 w-[240px]"
+                      value={burnAmount}
+                      onChange = {(e) => setBurnAmount(e.target.value)}
+                    
+                      />
+                      <button 
+                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-7 py-4 text-center me-2 mb-2"
+                    onClick={handleBurn}
+                    > Burn</button>
+
+            </div>
+
+        </div>
+              </div>
+              :
+              <div>
+                
+              </div>
+            }
+          </div>
 
           <div className="mt-20">
             <button onClick={toogleComponenet}> Toogle</button>
@@ -255,19 +326,7 @@ export default function App() {
             }
           </div>
 
-          <div>
-          <button onClick={burnComponenet}> Burn</button>
-            {burnToogle ? 
-            
-              <div>
-                <Burn></Burn>
-              </div>
-              :
-              <div>
-                
-              </div>
-            }
-          </div>
+        
 
         </div>
 
