@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { ethers } from "ethers"
-
-import { Chart } from "react-google-charts";
 import {useSpring, animated} from "@react-spring/web"
+import { Tooltip } from 'react-tooltip'
 
 export default function ParticipantInfo({participant, own}){
 
+    const name = "Name Surname"
     const ownNum = Number(own)
     const props = useSpring({ 
     from: {number: 0}, 
@@ -14,10 +14,15 @@ export default function ParticipantInfo({participant, own}){
     config:{duration: 1000}})
 
     return(
-        <div className=" h-[100px] rounded-2xl mt-10 mb-5">
-           <h2 className="">{participant}</h2>
-           <h2>own {own}</h2>
-           <h2> <animated.span>
+        <div className="w-[100%] mx-auto border-b-4 border-yellow-400  flex justify-between  mt-4 mb-5">
+           <h2 className="text-yellow-400 font-mono text-lg"
+             
+           data-tooltip-id="my-tooltip" data-tooltip-content={name}
+           >{participant}</h2>
+
+
+<Tooltip id="my-tooltip" />
+           <h2 className="text-lg text-yellow-200"> <animated.span>
             {props.number.to(n=> n.toFixed(0))}
             </animated.span>%</h2>
 

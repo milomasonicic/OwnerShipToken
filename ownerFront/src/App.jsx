@@ -166,7 +166,8 @@ export default function App() {
         // Validate and convert burnAmount
   
 
-    // Send burn transaction
+       // Convert burnAmount to a number with 18 decimal places
+       
         const tx = await contract.burn(Number(burnAmount));
        
 
@@ -273,7 +274,7 @@ export default function App() {
               onClick={handleDeposit}> Deposit</button>
 
             </div>
-            <h3>BURN, handeBurn funkcija itd, set state and value itd</h3>
+           
             <div
             className="w-[100%] md:w-[90%] flex flex-col md:flex-row
             mx-auto 
@@ -306,7 +307,7 @@ export default function App() {
             <button onClick={toogleComponenet}> Toogle</button>
             {
               toogle ?
-              <div className="bg-zinc-600 h-[600px]"> yes 
+              <div className="bg-zinc-600 min-h-[400px]"> yes 
                 <OwnershipToken state={state}></OwnershipToken>
               </div>
               :
