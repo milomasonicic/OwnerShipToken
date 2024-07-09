@@ -1,5 +1,5 @@
 import { ethers, formatUnits } from "ethers";
-import abi from "./contract/Own.json"
+import abi from "./contract/OwnBurnable.json"
 import { useState, useRef, useEffect, useTransition } from "react";
 import OwnershipToken from "./OwnershipToken";
 import Adress from "./WalletAdress";
@@ -18,6 +18,8 @@ export default function App() {
     const [balance, setBalance] = useState("")
     const balanceRef = useRef("")
     const [burnToogle, setburnToogle] = useState(false)
+    //burn
+    const [burnAmount, setBurnAmount] = useState("")
 
   
     const [key, setKey] = useState(0);
@@ -67,7 +69,7 @@ export default function App() {
               balanceRef.current = showBalance
           }
       
-          const contractAddres = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+          const contractAddres = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
           const contractABI = abi.abi;
   
           const contract = new ethers.Contract(
@@ -102,7 +104,7 @@ export default function App() {
         const {contract} = state
         const totalDep = await contract.totalDeposit()
         const userDeposit = await contract.deposits(walletAddress)
-        const ownership = await contract.owwnerSip(walletAddress)
+        const ownership = await contract.ownership(walletAddress)
        
         totalDepositRef.current = formatUnits(totalDep, "ether")
         setUserDeposit(formatUnits(userDeposit, "ether"))
@@ -154,6 +156,36 @@ export default function App() {
       setburnToogle(burnToogle => !burnToogle)
     }
  
+    //burnFunction
+
+    async function handleBurn(){
+
+      try{
+
+        const {contract} = state
+        // Validate and convert burnAmount
+  
+
+    // Send burn transaction
+        const tx = await contract.burn(Number(burnAmount));
+       
+
+        await tx.wait();
+        //alert("Deposit successful")
+
+      //window.location.reload();
+
+        startTransition(async() => {
+          updateContractData()
+        })  
+
+        setBurnAmount("")
+
+      }catch(error){
+        console.error(error);
+      }
+
+    }
 
     return(
         <div className="bg-stone-50" key={key}>
@@ -241,7 +273,7 @@ export default function App() {
               onClick={handleDeposit}> Deposit</button>
 
             </div>
-            <h3>BURN</h3>
+            <h3>BURN, handeBurn funkcija itd, set state and value itd</h3>
             <div
             className="w-[100%] md:w-[90%] flex flex-col md:flex-row
             mx-auto 
@@ -255,15 +287,15 @@ export default function App() {
             >
               <input type="text"
               placeholder="Enter amount"
-              className="p-4 mr-2 ml-2 mb-2 w-[232px] border-4 rounded-xl"
-             
-              
+              className="p-4 mr-2 ml-2 mb-2 w-[234px] border-4 border-red-50 rounded-xl"
+              value={burnAmount}
+              onChange = {(e) => setBurnAmount(e.target.value)}
               />
               <button 
               
               class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-7 py-4 text-center me-2 mb-2
               w-[240px] md:w-[100px]"
-
+              onClick={handleBurn}
               > Burn</button>
 
             </div>

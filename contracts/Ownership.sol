@@ -2,19 +2,19 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract Own is ERC20 {
+//preTest
+contract OwnBurnable is ERC20, ERC20Burnable {
 
     uint256 public totalDeposit;
     uint256  counterValue = 5;
     mapping(address => uint256) public deposits;
-    mapping(address => uint256) public owwnerSip;
+    mapping(address => uint256) public ownership;
     address [] public participants;
     mapping(address => bool) public isParticipant;
 
-    constructor() ERC20("Ownership Token", "OWN"){
-
-    }
+    constructor() ERC20("Ownership Token", "OWN"){}
 
     function deposit() external payable {
 
@@ -28,21 +28,42 @@ contract Own is ERC20 {
         deposits[msg.sender] += msg.value;
         totalDeposit += msg.value;
 
-        updateOwnership(msg.sender);
+        updateOwnership();
 
         uint256 amountMint = msg.value/counterValue;
         _mint(msg.sender, amountMint);
 
     }
 
-    function updateOwnership(address user) internal {
+    function updateOwnership() internal {
 
-        owwnerSip[user] = (deposits[user] * 100)/ totalDeposit;
+        for(uint256 i = 0; i<participants.length; i++) {
+            address participant = participants[i];
+            ownership[participant] = (deposits[participant] * 100)/ totalDeposit;
+        }
 
     }  
 
      function getParticipants() external view returns (address[] memory) {
         return participants;
+    }
+
+    function burn(uint256 amount) public override {
+        require(balanceOf(msg.sender) >= amount, "Not Enough OWN tokens to burn");
+
+        _burn(msg.sender, amount);
+
+        uint256 ethAmount = amount * counterValue;
+        require(address(this).balance >= ethAmount, "Not Enough OWN tokens to burn");
+
+        uint256 withdrawAmount = ethAmount;
+
+        deposits[msg.sender] -= withdrawAmount;
+        totalDeposit -= withdrawAmount;
+
+        payable(msg.sender).transfer(withdrawAmount);
+        updateOwnership();
+
     }
 
 }

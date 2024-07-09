@@ -32,7 +32,7 @@ export default function OwnershipToken({state}){
 
       
       const ownershipPromises = participants.map(async (participant) => {
-            const ownership = await contract.owwnerSip(participant)
+            const ownership = await contract.ownership(participant)
 
             return {
             participant,
@@ -96,7 +96,7 @@ export default function OwnershipToken({state}){
 
           {participants[0]}
           <br></br>
-          {participants[1]}
+          
         </div>
     )
 }
