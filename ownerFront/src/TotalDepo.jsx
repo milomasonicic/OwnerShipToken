@@ -1,5 +1,6 @@
 export default function TotalDep({dep}){
 
+    
     return(
         <div className="
           md:w-[90%]

@@ -72,11 +72,11 @@ export default function OwnershipToken({state}){
             
             onClick={toogleComponenet}> 
             {toglePartc === true ? 
-                <p className="pl-6 text-left mt-12  border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold"> See Participants</p>
+                <p className="pl-6 text-left mt-12  border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold">  Close </p>
                 
                 :
                 
-                <p className="pl-6 mt-12 border-b-4 border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold"> Close</p>
+                <p className="pl-6 mt-12 border-b-4 border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold"> See Participants </p>
             }
             
             </button>
@@ -86,7 +86,7 @@ export default function OwnershipToken({state}){
                 <div className="w-[100%] mx-auto">
                         
                             <p >   
-                
+             
                             {ownerships.map(({participant, ownership}) =>
                                 
                                 (

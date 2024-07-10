@@ -8,6 +8,7 @@ import Ownership from "./Ownership";
 import TotalDep from "./TotalDepo";
 import UserDep from "./UserDepo";
 import "./index.css"
+import Footer from "./Footer";
 
 
 export default function App() {
@@ -191,9 +192,7 @@ export default function App() {
     return(
         <div className="bg-stone-50" key={key}>
 
-            <div>
-              SREDITI RESPONSIVE ZA OWNERSHIP TOKEN, SREDITI TOGLE BUTTONS , SREDITI TOTAL DEPOSIT, SREDITI U CONTRACTU VALUE TOKENA... I EVETUALNO NEKA ANIMCIJA
-            </div>
+            
 
           <div className=" max-w-[80%] mx-auto bg-neutral-50  ">
             <div className="w-[90%] mx-auto p-4 rounded-md mt-10 h-[100px]">
@@ -232,8 +231,7 @@ export default function App() {
 
              
                 <div>
-                ow
-                {ownership}
+             
              
                 </div>
               </div>
@@ -335,26 +333,16 @@ export default function App() {
               </div>
               :
               <div> 
-                no
+                
                 
               </div>
             }
           </div>
            
-         
-
+            <Footer></Footer>
+            
         </div>
 
     )
 }
 
-/*
-
-
- <!--div>
-              {connected ? 
-              <Deposit state={state}></Deposit>
-              :
-              ""  
-            }
-            </div*-->*/

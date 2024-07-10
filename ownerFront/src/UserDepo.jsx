@@ -8,7 +8,7 @@ export default function UserDep({dep}){
         p-4
         rounded-md mt-2 h-[100px] bg-neutral-50 shadow-md ">
             <h1>
-                totl
+                You
             </h1>
             {dep}
         </div>
