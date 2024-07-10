@@ -59,21 +59,34 @@ export default function OwnershipToken({state}){
       }
 
     return(
-        <div className="p-6">
+        <div className="p-6 w-[80%] mx-auto">
             <div>
-                <h1 className="mt-4 mb-4 text-yellow-400 font-mono font-extrabold text-4xl text-center"> Participants Infos </h1>
+                <h1 className="mt-4 mb-4 text-yellow-400 font-mono font-extrabold text-xl md:text-4xl text-center"> Participants Infos </h1>
                 
                 <TokenValue value={tokenValue} totalTokens={totalTokens}></TokenValue>
             </div>
 
             <div>
-            <button onClick={toogleComponenet}> Toogle</button>
+            <button 
+            className="text-left h-[70px] w-[100%] mt-4 mb-5"
+            
+            onClick={toogleComponenet}> 
             {toglePartc === true ? 
+                <p className="pl-6 text-left mt-12  border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold"> See Participants</p>
+                
+                :
+                
+                <p className="pl-6 mt-12 border-b-4 border-b-4 border-yellow-400  text-yellow-400 font-mono font-extrabold"> Close</p>
+            }
+            
+            </button>
+            {toglePartc === true ? 
+
             (
-                <div className="w-[100%]  bg-zinc-500 mx-auto">
+                <div className="w-[100%] mx-auto">
                         
                             <p >   
-
+                
                             {ownerships.map(({participant, ownership}) =>
                                 
                                 (
@@ -87,10 +100,10 @@ export default function OwnershipToken({state}){
 
                 </div>
             
-            )
-            : 
-            
-            "not"} 
+        )
+        : 
+        
+        ""} 
 
             </div>
 
@@ -100,3 +113,5 @@ export default function OwnershipToken({state}){
         </div>
     )
 }
+/*
+     */

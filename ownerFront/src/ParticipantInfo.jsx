@@ -13,16 +13,28 @@ export default function ParticipantInfo({participant, own}){
     delay: 200, 
     config:{duration: 1000}})
 
+    const getColor = (num) => {
+
+        if(num >= 90) return "font-extrabold bg-gradient-to-r from-cyan-500 to-blue-500"
+        if(num >= 60) return "font-extrabold bg-gradient-to-r from-emerald-500 to-lime-500"
+        if(num >= 30) return "font-extrabold bg-gradient-to-r from-red-200 via-red-300 to-yellow-200"
+        return "bg-gradient-to-r from-teal-200 to-lime-200 font-extrabold "
+    }
+
     return(
-        <div className="w-[100%] mx-auto border-b-4 border-yellow-400  flex justify-between  mt-4 mb-5">
-           <h2 className="text-yellow-400 font-mono text-lg"
+        <div className="w-[100%] mx-auto flex flex-col  md:flex-row justify-between  mt-4 mb-5">
+           <p className={`text-sm vreak-words md:text-lg bg-clip-text text-transparent ${getColor(own)}`}
              
-           data-tooltip-id="my-tooltip" data-tooltip-content={name}
-           >{participant}</h2>
+           data-tooltip-id="my-tooltip" data-tooltip-content={participant}
+           >{participant} 
+        
+           </p>
 
 
-<Tooltip id="my-tooltip" />
-           <h2 className="text-lg text-yellow-200"> <animated.span>
+            <Tooltip id="my-tooltip" />
+           <h2 className=
+           {`text-sm md:text-lg bg-clip-text text-transparent ${getColor(own)}`}
+           > <animated.span>
             {props.number.to(n=> n.toFixed(0))}
             </animated.span>%</h2>
 

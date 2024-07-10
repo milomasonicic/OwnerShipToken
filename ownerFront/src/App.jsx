@@ -8,7 +8,7 @@ import Ownership from "./Ownership";
 import TotalDep from "./TotalDepo";
 import UserDep from "./UserDepo";
 import "./index.css"
-import Burn from "./Burn";
+
 
 export default function App() {
 
@@ -191,6 +191,10 @@ export default function App() {
     return(
         <div className="bg-stone-50" key={key}>
 
+            <div>
+              SREDITI RESPONSIVE ZA OWNERSHIP TOKEN, SREDITI TOGLE BUTTONS , SREDITI TOTAL DEPOSIT, SREDITI U CONTRACTU VALUE TOKENA... I EVETUALNO NEKA ANIMCIJA
+            </div>
+
           <div className=" max-w-[80%] mx-auto bg-neutral-50  ">
             <div className="w-[90%] mx-auto p-4 rounded-md mt-10 h-[100px]">
              
@@ -264,13 +268,13 @@ export default function App() {
             >
               <input type="text"
               placeholder="Enter amount"
-              className="p-4 mr-2 ml-2 w-[240px]"
+              className="p-4 mr-2 ml-2 w-[190px] md:w-[240px]"
               value={deposit}
               onChange = {(e) => setDeposite(e.target.value)}
               
               />
               <button 
-              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-[240px] md:w-[100px] mt-4 md:mt-0 "
+              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-4 text-center me-2 mb-2 w-[190px] md:w-[240px] mt-4 md:mt-0 "
               onClick={handleDeposit}> Deposit</button>
 
             </div>
@@ -288,14 +292,14 @@ export default function App() {
             >
               <input type="text"
               placeholder="Enter amount"
-              className="p-4 mr-2 ml-2 mb-2 w-[234px] border-4 border-red-50 rounded-xl"
+              className="p-4 mr-2 ml-2 mb-2  w-[190px] md:w-[240px] border-4 border-red-50 rounded-xl"
               value={burnAmount}
               onChange = {(e) => setBurnAmount(e.target.value)}
               />
               <button 
               
               class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-7 py-4 text-center me-2 mb-2
-              w-[240px] md:w-[100px]"
+               w-[190px] md:w-[240px]"
               onClick={handleBurn}
               > Burn</button>
 
@@ -303,8 +307,27 @@ export default function App() {
    
           </div>
 
-          <div className="mt-20">
-            <button onClick={toogleComponenet}> Toogle</button>
+          <div className="mt-20 w-[100%]">
+            <div className="w-[90%] flex flex-justify-center mx-auto">
+            <button 
+            className=" 
+            mx-auto  
+            h-[70px] w-[80%] mt-4 mb-5"
+            onClick={toogleComponenet}> 
+            
+            {
+              toogle ? 
+              <p className="pl-6 font-mono border-b-4 text-left text-lg text-neutral-700 text-base font-bold">
+                Close
+              </p>
+              :
+              <p className="pl-6 font-mono border-b-4 text-left text-lg text-neutral-700 text-base font-bold">
+                See More Info
+              </p>
+            }
+            </button>
+
+            </div>
             {
               toogle ?
               <div className="bg-zinc-600 min-h-[400px]"> yes 
@@ -317,20 +340,8 @@ export default function App() {
               </div>
             }
           </div>
-
-          <div>
-          <button onClick={burnComponenet}> Burn</button>
-            {burnToogle ? 
-            
-              <div>
-                <Burn></Burn>
-              </div>
-              :
-              <div>
-                
-              </div>
-            }
-          </div>
+           
+         
 
         </div>
 

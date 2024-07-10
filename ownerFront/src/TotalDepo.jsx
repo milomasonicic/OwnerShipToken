@@ -8,7 +8,7 @@ export default function TotalDep({dep}){
         p-4
         rounded-md mt-2 h-[100px] bg-neutral-50 shadow-md ">
             <h1>
-                totl
+                Total
             </h1>
             {dep}
         </div>
